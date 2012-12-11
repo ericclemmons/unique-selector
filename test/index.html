@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>unique-selector tests</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="mocha/mocha.css" />
+    <script src="mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script>
+      function assert(expr, msg) {
+        if (!expr) throw new Error(msg || 'failed');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <div id="fixture">
+      <h3>Test Fixture <small>(for Mocha)</small></h3>
+
+      <p>
+        Lorem <em>ipsum</em> dolor sit amet, consectetur adipisicing elit.
+      </p>
+
+      <ul id="nav">
+        <li class="first item">Item 1</li>
+        <li class="item">
+          Item 2
+
+          <ul id="nested">
+            <li class="child"><img alt="Some Title" /></li>
+          </ul>
+        </li>
+        <li class="last item">Item 3</li>
+      </ul>
+    </div>
+
+    <script src="../build/build.js"></script>
+    <script src="unique-selector.js"></script>
+    <script>
+      var cloud = require('visionmedia-mocha-cloud/client');
+
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run()
+      } else {
+        cloud(mocha.run());
+      }
+    </script>
+  </body>
+</html>
