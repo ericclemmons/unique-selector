@@ -2,6 +2,7 @@ unique-selector
 ===============
 
 Given a DOM node, return a unique CSS selector matching only that element.
+This is particularly useful when tracking in custom variables in analytics:
 
 
     document.addEventListener('click', function(event) {
@@ -11,7 +12,10 @@ Given a DOM node, return a unique CSS selector matching only that element.
     }, false);
 
 
-This is particularly useful when tracking in custom variables in analytics.
+Installation
+------------
+
+    component install ericclemmons/unique-selector
 
 
 Tests
