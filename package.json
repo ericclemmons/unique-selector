@@ -21,5 +21,10 @@
     "event"
   ],
   "author": "Eric Clemmons <eric@smarterspam.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "component": "~0.10.1",
+    "mocha": "~1.7.4",
+    "mocha-phantomjs": "~1.1.1"
+  }
 }
