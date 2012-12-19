@@ -1,6 +1,8 @@
 unique-selector
 ===============
 
+[![Build Status](https://travis-ci.org/ericclemmons/unique-selector.png)](https://travis-ci.org/ericclemmons/unique-selector)
+
 Given a DOM node, return a unique CSS selector matching only that element.
 This is particularly useful when tracking in custom variables in analytics:
 
