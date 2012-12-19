@@ -1,0 +1,30 @@
+{
+  "name": "unique-selector",
+  "version": "0.0.1",
+  "description": "Given a DOM node, return a unique CSS selector matching only that element",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ericclemmons/unique-selector.git"
+  },
+  "keywords": [
+    "dom",
+    "html",
+    "css",
+    "selector",
+    "event"
+  ],
+  "author": "Eric Clemmons <eric@smarterspam.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "component": "~0.10.1",
+    "mocha": "~1.7.4",
+    "mocha-phantomjs": "~1.1.1"
+  }
+}
