@@ -55,7 +55,7 @@ function selectors(el) {
     } else {
       // Otherwise, use tag name
       label     = el.tagName.toLowerCase();
-      className = el.getAttribute('class');
+      var className = el.getAttribute('class');
 
       // Tag names could use classes for specificity
       if (className && className.length) {
