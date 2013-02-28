@@ -54,4 +54,17 @@ describe('unique-selector', function() {
       });
     });
   }
+
+  describe('with symmetrical dom structures', function () {
+    var childs = document.querySelectorAll('.symmetrical .child')
+    var a = childs[0]
+    var b = childs[1]
+    it('should work', function () {
+      var res = document.querySelector(unique(a))
+      assert(res === a, 'not a')
+      
+      var res = document.querySelector(unique(b))
+      assert(res === b, 'not b')
+    })
+  })
 });
