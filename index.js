@@ -69,7 +69,7 @@ function selector(el) {
     }
 
     selector = label + (selector && ('>' + selector));
-  } while ((el = el.parentNode) && el.nodeType < 4);
+  } while ((el = el.parentNode) && el.nodeType === 1);
 
   return selector
 }
