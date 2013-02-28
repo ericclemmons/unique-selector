@@ -17,15 +17,15 @@ function unique(el) {
     throw new TypeError('Element expected');
   }
 
-  var selector = selectors(el).join(' > ');
-  var matches  = document.querySelectorAll(selector);
+  var sel = selector(el)
+  var matches  = document.querySelectorAll(sel);
 
   // not unique enough (wow!)
   if (matches.length > 1) {
-    selector += ':nth-child(' + (prevSibs(el) + 1) +')';
+    sel += ':nth-child(' + (prevSibs(el) + 1) +')';
   }
 
-  return selector;
+  return sel
 }
 
 function prevSibs(el){
@@ -35,32 +35,30 @@ function prevSibs(el){
 }
 
 /**
- * CSS selectors to generate unique selector for DOM element
+ * Build a selector string
  *
  * @param {Element} el
- * @return {Array}
+ * @return {String}
  * @api prviate
  */
 
-function selectors(el) {
-  var parts = [];
-  var label = null;
+function selector(el) {
   var title = null;
   var alt   = null;
+  var selector = ''
 
   do {
     // IDs are unique enough
     if (el.id) {
-      label = '#' + el.id;
-    } else {
-      // Otherwise, use tag name
-      label     = el.tagName.toLowerCase();
-      var className = el.getAttribute('class');
+      return '#' + el.id + (selector && ('>' + selector));
+    }
 
-      // Tag names could use classes for specificity
-      if (className && className.length) {
-        label += '.' + className.split(' ').join('.');
-      }
+    // Otherwise, use tag name
+    var label = el.tagName.toLowerCase();
+    var className = el.getAttribute('class');
+
+    if (className) {
+      label += '.' + className.replace(' ', '.');
     }
 
     // Titles & Alt attributes are very useful for specificity and tracking
@@ -70,13 +68,8 @@ function selectors(el) {
       label += '[alt="' + alt + '"]';
     }
 
-    parts.unshift(label);
-  } while (!el.id && (el = el.parentNode) && el.tagName);
+    selector = label + (selector && ('>' + selector));
+  } while ((el = el.parentNode) && el.nodeType < 4);
 
-  // Some selectors should have matched at least
-  if (!parts.length) {
-    throw new Error('Failed to identify CSS selector');
-  }
-
-  return parts;
+  return selector
 }
