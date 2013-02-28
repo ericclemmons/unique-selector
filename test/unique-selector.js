@@ -29,15 +29,15 @@ describe('unique-selector', function() {
 
   var selectors = {
     'HTML > BODY':
-      'html>body',
+      'BODY',
     'HTML > BODY > DIV#fixture':
       '#fixture',
     'HTML > BODY > DIV#fixture > H3 > SMALL':
-      '#fixture>h3>small',
+      '#fixture>H3:nth-child(1)>SMALL:nth-child(1)',
     'HTML > BODY > DIV#fixture > UL#nav > LI.item:nth-child(2)':
-      '#nav>li.item.nav.selected:nth-child(2)',
+      '#nav>LI.item.nav.selected:nth-child(2)',
     'HTML > BODY > DIV#fixture > UL#nav > LI.item > UL#nested > LI.child > IMG':
-      '#nested>li.child>img[alt="Some Title"]'
+      '#nested>LI.child:nth-child(1)>IMG:nth-child(1)'
   };
 
   for (var selector in selectors) {

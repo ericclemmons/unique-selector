@@ -17,21 +17,9 @@ function unique(el) {
     throw new TypeError('Element expected');
   }
 
-  var sel = selector(el)
-  var matches  = document.querySelectorAll(sel);
+  if (el === document) return 'HTML'
 
-  // not unique enough (wow!)
-  if (matches.length > 1) {
-    sel += ':nth-child(' + (prevSibs(el) + 1) +')';
-  }
-
-  return sel
-}
-
-function prevSibs(el){
-  var i = 0
-  while (el = el.previousElementSibling) i++;
-  return i
+  return selector(el)
 }
 
 /**
@@ -43,33 +31,37 @@ function prevSibs(el){
  */
 
 function selector(el) {
-  var title = null;
-  var alt   = null;
   var selector = ''
+  var body = document.body
 
   do {
     // IDs are unique enough
     if (el.id) {
       return '#' + el.id + (selector && ('>' + selector));
     }
+    if (el === body) {
+      return 'BODY'+ (selector && ('>' + selector));
+    }
 
-    // Otherwise, use tag name
-    var label = el.tagName.toLowerCase();
+    var label = el.tagName
+    // must be a document
+    if (!label) return selector
     var className = el.getAttribute('class');
 
     if (className) {
       label += '.' + className.replace(/ /g, '.');
     }
 
-    // Titles & Alt attributes are very useful for specificity and tracking
-    if (title = el.getAttribute('title')) {
-      label += '[title="' + title + '"]';
-    } else if (alt = el.getAttribute('alt')) {
-      label += '[alt="' + alt + '"]';
-    }
-
+    label += ':nth-child(' + index(el) +')';
     selector = label + (selector && ('>' + selector));
-  } while ((el = el.parentNode) && el.nodeType === 1);
+
+  } while (el = el.parentNode);
 
   return selector
+}
+
+function index(el){
+  var i = 1
+  while (el = el.previousElementSibling) i++;
+  return i
 }
