@@ -9,7 +9,7 @@ This is particularly useful when tracking in custom variables in analytics:
 
     document.addEventListener('click', function(event) {
         var selector = unique(event.target);
-
+	
         _gaq.push(['_trackEvent', 'Engagement', 'Click', selector]);
     }, false);
 
@@ -23,7 +23,7 @@ Installation
 Tests
 -----
 
-    $ git submodule update --init
+    $ npm install
     $ make
     $ open test/index.html
 

@@ -17,22 +17,22 @@ function unique(el) {
     throw new TypeError('Element expected');
   }
 
-  var selector  = selectors(el).join(' > ');
-  var matches   = document.querySelectorAll(selector);
+  var selector = selectors(el).join(' > ');
+  var matches  = document.querySelectorAll(selector);
 
-  // If selector is not unique enough (wow!), then
-  // force the `nth-child` pseido selector
+  // not unique enough (wow!)
   if (matches.length > 1) {
-    for (var i = 0; i < matches.length; i++) {
-      if (el === matches[i]) {
-        selector += ':nth-child(' + (i + 1) +')';
-        break;
-      }
-    }
+    selector += ':nth-child(' + (prevSibs(el) + 1) +')';
   }
 
   return selector;
-};
+}
+
+function prevSibs(el){
+  var i = 0
+  while (el = el.previousElementSibling) i++;
+  return i
+}
 
 /**
  * CSS selectors to generate unique selector for DOM element
