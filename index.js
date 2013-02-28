@@ -58,7 +58,7 @@ function selector(el) {
     var className = el.getAttribute('class');
 
     if (className) {
-      label += '.' + className.replace(' ', '.');
+      label += '.' + className.replace(/ /g, '.');
     }
 
     // Titles & Alt attributes are very useful for specificity and tracking
