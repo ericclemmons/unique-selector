@@ -9,7 +9,6 @@ module.exports = unique;
  *
  * @param {Element} el
  * @return {String}
- * @api private
  */
 
 function unique(el) {
@@ -17,66 +16,51 @@ function unique(el) {
     throw new TypeError('Element expected');
   }
 
-  var selector  = selectors(el).join(' > ');
-  var matches   = document.querySelectorAll(selector);
+  if (el === document) return 'HTML'
 
-  // If selector is not unique enough (wow!), then
-  // force the `nth-child` pseido selector
-  if (matches.length > 1) {
-    for (var i = 0; i < matches.length; i++) {
-      if (el === matches[i]) {
-        selector += ':nth-child(' + (i + 1) +')';
-        break;
-      }
-    }
-  }
-
-  return selector;
-};
+  return selector(el)
+}
 
 /**
- * CSS selectors to generate unique selector for DOM element
+ * Build a selector string
  *
  * @param {Element} el
- * @return {Array}
+ * @return {String}
  * @api prviate
  */
 
-function selectors(el) {
-  var parts = [];
-  var label = null;
-  var title = null;
-  var alt   = null;
+function selector(el) {
+  var selector = ''
+  var body = document.body
 
   do {
     // IDs are unique enough
     if (el.id) {
-      label = '#' + el.id;
-    } else {
-      // Otherwise, use tag name
-      label     = el.tagName.toLowerCase();
-      var className = el.getAttribute('class');
-
-      // Tag names could use classes for specificity
-      if (className && className.length) {
-        label += '.' + className.split(' ').join('.');
-      }
+      return '#' + el.id + (selector && ('>' + selector));
+    }
+    if (el === body) {
+      return 'BODY'+ (selector && ('>' + selector));
     }
 
-    // Titles & Alt attributes are very useful for specificity and tracking
-    if (title = el.getAttribute('title')) {
-      label += '[title="' + title + '"]';
-    } else if (alt = el.getAttribute('alt')) {
-      label += '[alt="' + alt + '"]';
+    var label = el.tagName
+    // avoid documents
+    if (!label) return selector
+    var className = el.getAttribute('class');
+
+    if (className) {
+      label += '.' + className.replace(/ /g, '.');
     }
 
-    parts.unshift(label);
-  } while (!el.id && (el = el.parentNode) && el.tagName);
+    label += ':nth-child(' + index(el) +')';
+    selector = label + (selector && ('>' + selector));
 
-  // Some selectors should have matched at least
-  if (!parts.length) {
-    throw new Error('Failed to identify CSS selector');
-  }
+  } while (el = el.parentNode);
 
-  return parts;
+  return selector
+}
+
+function index(el){
+  var i = 1
+  while (el = el.previousElementSibling) i++;
+  return i
 }
