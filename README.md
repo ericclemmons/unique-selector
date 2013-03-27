@@ -23,7 +23,7 @@ Installation
 Tests
 -----
 
-    $ git submodule update --init
+    $ npm install
     $ make
     $ open test/index.html
 

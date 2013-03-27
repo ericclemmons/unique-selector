@@ -1,3 +1,5 @@
+all: clean build test
+
 build: index.js components
 	@node_modules/.bin/component build --dev
 
