@@ -31,9 +31,13 @@ Tests
 Releases
 --------
 
+- v0.0.3
+
+    - Add support for various `<form>` elements ([#2](https://github.com/ericclemmons/unique-selector/issues/2))
+
 - v0.0.2
 
-    - Fix bug with `nth-child` calculuation
+    - Fix bug with `nth-child` calculation
 
 - v0.0.1
 
