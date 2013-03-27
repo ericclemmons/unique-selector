@@ -25,6 +25,9 @@ function unique(el) {
   if (matches.length > 1) {
     for (var i = 0; i < matches.length; i++) {
       if (el === matches[i]) {
+        // Recalculate index based on position of el amongst siblings
+        i = [].indexOf.call(el.parentNode.children, el);
+
         selector += ':nth-child(' + (i + 1) +')';
         break;
       }
