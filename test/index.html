@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
   <head>
     <title>unique-selector tests</title>
@@ -29,6 +31,26 @@
         </li>
         <li class="last collapsed item">Item 3</li>
       </ul>
+
+      <form>
+        <select name="state">
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="TX" selected>Texas</option>
+        </select>
+
+        <p>
+          Do you have a computer?
+
+          <label>
+            <input type="radio" name="computer" value="1" checked />&nbsp;Yes
+          </label>
+
+          <label>
+            <input type="radio" name="computer" value="0" />&nbsp;No
+          </label>
+        </p>
+      </form>
     </div>
 
     <script src="../build/build.js"></script>

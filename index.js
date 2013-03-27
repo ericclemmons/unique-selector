@@ -50,6 +50,8 @@ function selectors(el) {
   var label = null;
   var title = null;
   var alt   = null;
+  var name  = null;
+  var value = null;
 
   do {
     // IDs are unique enough
@@ -71,6 +73,12 @@ function selectors(el) {
       label += '[title="' + title + '"]';
     } else if (alt = el.getAttribute('alt')) {
       label += '[alt="' + alt + '"]';
+    } else if (name = el.getAttribute('name')) {
+      label += '[name="' + name + '"]';
+    }
+
+    if (value = el.getAttribute('value')) {
+      label += '[value="' + value + '"]';
     }
 
     parts.unshift(label);
