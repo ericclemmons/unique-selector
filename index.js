@@ -28,7 +28,7 @@ function unique(el) {
         // Recalculate index based on position of el amongst siblings
         i = [].indexOf.call(el.parentNode.children, el);
 
-        selector += ':nth-child(' + (i + 1) +')';
+        selector += ':nth-child(' + (i + 1) + ')';
         break;
       }
     }
