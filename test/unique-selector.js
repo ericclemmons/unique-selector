@@ -1,5 +1,9 @@
 var unique = require('unique-selector');
 
+function assert(expr, msg) {
+    if (!expr) throw new Error(msg || 'failed');
+}
+
 describe('unique-selector', function() {
     describe('with undefined', function() {
         it('should return a TypeError', function() {

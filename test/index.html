@@ -5,15 +5,7 @@
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
     <script src="../node_modules/mocha/mocha.js"></script>
     <script>
-      mocha.setup({
-        'ignoreLeaks' : true,
-        'ui'          : 'bdd'
-      });
-    </script>
-    <script>
-      function assert(expr, msg) {
-        if (!expr) throw new Error(msg || 'failed');
-      }
+      mocha.setup('bdd');
     </script>
   </head>
   <body>
