@@ -28,6 +28,19 @@ Tests
     $ open test/index.html
 
 
+Releases
+--------
+
+- v0.0.2
+
+    - Fix bug with `nth-child` calculuation
+
+- v0.0.1
+
+    - Initial release
+
+
+
 License
 -------
 
