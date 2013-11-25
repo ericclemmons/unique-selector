@@ -49,3 +49,7 @@ License
 -------
 
 MIT
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ericclemmons/unique-selector/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
