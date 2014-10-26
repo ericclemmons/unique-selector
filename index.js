@@ -38,6 +38,27 @@ function unique(el) {
 };
 
 /**
+ * Get class names for an element
+ *
+ * @pararm {Element} el
+ * @return {Array}
+ */
+
+function getClassNames(el) {
+    var className = el.getAttribute('class');
+    if (!className || !className.length) { return []; }
+
+    // remove duplicate whitespace
+    className = className.replace(/\s+/g, ' ');
+
+    // trim leading and trailing whitespace
+    className = className.replace(/^\s+|\s+$/g, '');
+
+    // split into separate classnames
+    return className.split(' ');
+}
+
+/**
  * CSS selectors to generate unique selector for DOM element
  *
  * @param {Element} el
@@ -60,11 +81,12 @@ function selectors(el) {
     } else {
       // Otherwise, use tag name
       label     = el.tagName.toLowerCase();
-      var className = el.getAttribute('class');
+
+      var classNames = getClassNames(el);
 
       // Tag names could use classes for specificity
-      if (className && className.length) {
-        label += '.' + className.split(' ').join('.');
+      if (classNames.length) {
+        label += '.' + classNames.join('.');
       }
     }
 

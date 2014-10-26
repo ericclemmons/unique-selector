@@ -37,7 +37,8 @@ describe('unique-selector', function() {
     'HTML > BODY > DIV#fixture > UL#nav > LI:nth-child(3)': '#nav > li.last.collapsed.item',
     'HTML > BODY > DIV#fixture > UL#nav > LI.item > UL#nested > LI.child > IMG': '#nested > li.child > img[alt="Some Title"]',
     'HTML > BODY > DIV#fixture > FORM > SELECT > OPTION[selected]': '#fixture > form > select[name="state"] > option[value="TX"]',
-    'HTML > BODY > DIV#fixture > FORM > P > LABEL > INPUT[checked]': '#fixture > form > p > label > input[name="computer"][value="1"]'
+    'HTML > BODY > DIV#fixture > FORM > P > LABEL > INPUT[checked]': '#fixture > form > p > label > input[name="computer"][value="1"]',
+    'HTML > BODY > DIV#fixture > DIV.classnames.with.extra.space > SPAN': '#fixture > div.classnames.with.extra.space > span'
   };
 
   for (selector in selectors) {
