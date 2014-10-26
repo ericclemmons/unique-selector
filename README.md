@@ -31,6 +31,10 @@ Tests
 Releases
 --------
 
+- v0.0.4
+
+    - Handle extra whitespace in `className` ([#9](https://github.com/ericclemmons/unique-selector/pull/9))
+
 - v0.0.3
 
     - Add support for various `<form>` elements ([#2](https://github.com/ericclemmons/unique-selector/issues/2))
