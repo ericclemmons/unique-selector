@@ -1,13 +1,21 @@
 {
   "name": "unique-selector",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Given a DOM node, return a unique CSS selector matching only that element",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "make"
+    "test": "npm run compile && mocha --compilers js:babel-register --require babel-polyfill",
+    "compile": "babel --presets es2015,stage-0,stage-1,stage-2 --require babel-polyfill -d lib/ src/",
+    "prepublish": "npm run compile",
+    "watch": "npm-scripts-watcher"
+  },
+  "watch": {
+    "src/**/*.js": [
+      "compile"
+    ]
   },
   "repository": {
     "type": "git",
@@ -21,9 +29,22 @@
     "event"
   ],
   "author": "Eric Clemmons <eric@smarterspam.com>",
+  "contributors":[{
+      "name": "Avraam Mavridis",
+      "email": "avr.mav@gmail.com"
+  }],
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.1.18",
+    "babel-core": "^6.1.18",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-stage-0": "^6.1.18",
+    "babel-register": "^6.3.13",
     "component": "~0.10.1",
+    "eslint": "^2.6.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-config-airbnb-lite": "^1.0.4",
+    "eslint-plugin-react": "^4.2.3",
     "mocha": "~1.7.4",
     "mocha-phantomjs": "~1.1.1"
   }

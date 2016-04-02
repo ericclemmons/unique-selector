@@ -1,0 +1,36 @@
+{
+    "rules": {
+        "quotes": [
+            2,
+            "single"
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-console": 0,
+        "max-len": [1, 160],
+        "quote-props": [1, "consistent-as-needed"],
+        "no-cond-assign": [2, "except-parens"],
+        "radix": 0,
+        "func-names": 0,
+        "padded-blocks": 0,
+        "computed-property-spacing": [2, "always"],
+        "space-infix-ops": 0,
+        "no-unused-vars": [1, {"vars": "local", "args": "none"}],
+        "space-before-function-paren": 2,
+        "space-in-parens": [2, "always"],
+        "key-spacing": [2, { "align": "colon", "beforeColon": false, "afterColon": true }],
+        "brace-style": [2, "allman", { "allowSingleLine": true }]
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "extends": "airbnb/base"
+}
