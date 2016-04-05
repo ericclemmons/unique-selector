@@ -2,7 +2,12 @@
  * Expose `unique`
  */
 
+import isElement from './isElement';
+
 module.exports = unique;
+
+
+
 
 /**
  * Generate unique CSS selector for given DOM element
@@ -12,9 +17,11 @@ module.exports = unique;
  * @api private
  */
 
-function unique(el) {
-  if (!el || !el.tagName) {
-    throw new TypeError('Element expected');
+function unique( el )
+{
+  if ( !isElement( el ) )
+  {
+    throw new TypeError( 'Element expected' );
   }
 
   var selector  = selectors(el).join(' > ');
