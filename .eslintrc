@@ -17,6 +17,8 @@
         "quote-props": [1, "consistent-as-needed"],
         "no-cond-assign": [2, "except-parens"],
         "radix": 0,
+        "keyword-spacing": 0,
+        "one-var": 0,
         "func-names": 0,
         "padded-blocks": 0,
         "computed-property-spacing": [2, "always"],

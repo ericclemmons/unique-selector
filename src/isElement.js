@@ -1,4 +1,7 @@
-export default function isElement( el )
+/**
+ * Determines if the passed el is a DOM element
+ */
+export function isElement( el )
 {
   let isElem;
 

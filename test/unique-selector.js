@@ -1,4 +1,4 @@
-var unique = require('unique-selector');
+var unique = '../lib';
 
 function assert(expr, msg) {
   if (!expr) throw new Error(typeof msg === undefined ? 'failed' : msg);
@@ -41,7 +41,7 @@ describe('unique-selector', function() {
     'HTML > BODY > DIV#fixture > DIV.classnames.with.extra.space > SPAN': '#fixture > div.classnames.with.extra.space > span'
   };
 
-  for (selector in selectors) {
+  for (var selector in selectors) {
     describe('with ' + selector, function() {
       var expected  = selectors[selector];
       var match     = selector ? document.querySelector(selector): undefined;

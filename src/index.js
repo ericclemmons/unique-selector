@@ -2,11 +2,153 @@
  * Expose `unique`
  */
 
-import isElement from './isElement';
+import { getClassNames } from './getClassNames';
+import { getAttributes } from './getAttributes';
+import { getNthChild } from './getNthChild';
+import { getTag } from './getTag';
+import { isUnique } from './isUnique';
+import { getParents } from './getParents';
 
-module.exports = unique;
+
+/**
+ * Returns all the selectors of the elmenet
+ * @param  { Object } element
+ * @return { Object }
+ */
+function getAllSelectors( el, options )
+{
+  const { selectors } = options;
+  const funcs =
+    {
+      'Tag'        : getTag,
+      'NthChild'   : getNthChild,
+      'Attributes' : getAttributes,
+      'Class'      : getClassNames,
+    };
+
+  return selectors.reduce( ( res, next ) =>
+  {
+    res[ next ] = funcs[ next ]( el );
+    return res;
+  }, {} );
+}
+
+/**
+ * Tests uniqueNess of the element inside its parent
+ * @param  { Object } element
+ * @param { String } Selectors
+ * @return { Boolean }
+ */
+function testUniqueness( element, selector )
+{
+  const { parentNode } = element;
+  const elements = parentNode.querySelectorAll( selector );
+  return elements.length === 1 && elements[ 0 ] === element;
+}
+
+/**
+ * Checks all the possible selectors of an element to find one unique and return it
+ * @param  { Object } element
+ * @param  { Array } items
+ * @param  { String } tag
+ * @return { String }
+ */
+function getUniqueCombination( element, items, tag )
+{
+  const combinations = getCombinations( items );
+  const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
+  if( uniqCombinations.length ) return uniqCombinations[ 0 ];
+
+  if( Boolean( tag ) )
+  {
+    const combinations = items.map( item => tag + item );
+    const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
+    if( uniqCombinations.length ) return uniqCombinations[ 0 ];
+  }
+
+  return null;
+}
 
 
+function getUniqueSelector( el, options=['Class', 'Tag', 'NthChild'] )
+{
+  let foundSelector;
+
+  const elementSelectors = getAllSelectors( el );
+  const { selectors } = options;
+
+  for( let selectorType of selectors )
+  {
+    const { Tag, Class : Classes, Attributes, NthChild } = elementSelectors;
+    switch( selectorType )
+    {
+
+      case 'Tag':
+        if( Boolean( Tag ) && testUniqueness( el, Tag ) )
+        {
+          return Tag;
+        }
+        break;
+
+      case 'Class':
+        if ( Boolean( Classes ) && Classes.length )
+        {
+          foundSelector = getUniqueCombination( el, Classes, Tag );
+          if( foundSelector )
+          {
+            return foundSelector;
+          }
+        }
+        break;
+
+      case 'Attributes':
+        if ( Boolean( Attributes ) && Attributes.length )
+        {
+          foundSelector = getUniqueCombination( el, Attributes, Tag );
+          if ( foundSelector )
+          {
+            return foundSelector;
+          }
+        }
+        break;
+
+      case 'NthChild':
+        if ( Boolean( NthChild ) )
+        {
+          return NthChild;
+        }
+        break;
+      default :
+        return '*';
+    }
+  }
+  return '*';
+}
+
+function getCombinations( items )
+{
+  items = items ? items : [];
+  let result = [[]];
+  let i, j, k, l, ref, ref1;
+
+  /**
+  * Create array of array with all possibe combimations
+  * e.g. an element with 2 classes will have 3 possible combimations
+  * ['.classA', '.classB'] -> ['.classA', '.classB', '.classA.classB']
+  */
+  for ( i = k = 0, ref = items.length - 1; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k )
+  {
+    for ( j = l = 0, ref1 = result.length - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; j = 0 <= ref1 ? ++l : --l )
+    {
+      result.push( result[ j ].concat( items[ i ] ) );
+    }
+  }
+
+  result.shift();
+  result = result.sort( ( a, b ) => a.length - b.length );
+  result = result.map( item => item.join( '' ) );
+  return result;
+}
 
 
 /**
@@ -19,104 +161,27 @@ module.exports = unique;
 
 function unique( el )
 {
-  if ( !isElement( el ) )
+  const allSelectors = [];
+  const parents = getParents( el );
+  for( let elem of parents )
   {
-    throw new TypeError( 'Element expected' );
-  }
-
-  var selector  = selectors(el).join(' > ');
-  var matches   = document.querySelectorAll(selector);
-
-  // If selector is not unique enough (wow!), then
-  // force the `nth-child` pseido selector
-  if (matches.length > 1) {
-    for (var i = 0; i < matches.length; i++) {
-      if (el === matches[i]) {
-        // Recalculate index based on position of el amongst siblings
-        i = [].indexOf.call(el.parentNode.children, el);
-
-        selector += ':nth-child(' + (i + 1) + ')';
-        break;
-      }
+    const selector = getUniqueSelector( elem );
+    if( Boolean( selector ) )
+    {
+      allSelectors.push( selector );
     }
   }
 
-  return selector;
-};
-
-/**
- * Get class names for an element
- *
- * @pararm {Element} el
- * @return {Array}
- */
-
-function getClassNames(el) {
-    var className = el.getAttribute('class');
-    if (!className || !className.length) { return []; }
-
-    // remove duplicate whitespace
-    className = className.replace(/\s+/g, ' ');
-
-    // trim leading and trailing whitespace
-    className = className.replace(/^\s+|\s+$/g, '');
-
-    // split into separate classnames
-    return className.split(' ');
-}
-
-/**
- * CSS selectors to generate unique selector for DOM element
- *
- * @param {Element} el
- * @return {Array}
- * @api prviate
- */
-
-function selectors(el) {
-  var parts = [];
-  var label = null;
-  var title = null;
-  var alt   = null;
-  var name  = null;
-  var value = null;
-
-  do {
-    // IDs are unique enough
-    if (el.id) {
-      label = '#' + el.id;
-    } else {
-      // Otherwise, use tag name
-      label     = el.tagName.toLowerCase();
-
-      var classNames = getClassNames(el);
-
-      // Tag names could use classes for specificity
-      if (classNames.length) {
-        label += '.' + classNames.join('.');
-      }
+  const selectors = [];
+  for( let it of allSelectors )
+  {
+    selectors.unshift( it );
+    const selector = selectors.join( ' > ' );
+    if( isUnique( el, selector ) )
+    {
+      return selector;
     }
-
-    // Titles & Alt attributes are very useful for specificity and tracking
-    if (title = el.getAttribute('title')) {
-      label += '[title="' + title + '"]';
-    } else if (alt = el.getAttribute('alt')) {
-      label += '[alt="' + alt + '"]';
-    } else if (name = el.getAttribute('name')) {
-      label += '[name="' + name + '"]';
-    }
-
-    if (value = el.getAttribute('value')) {
-      label += '[value="' + value + '"]';
-    }
-
-    parts.unshift(label);
-  } while (!el.id && (el = el.parentNode) && el.tagName);
-
-  // Some selectors should have matched at least
-  if (!parts.length) {
-    throw new Error('Failed to identify CSS selector');
   }
 
-  return parts;
+  return null;
 }
