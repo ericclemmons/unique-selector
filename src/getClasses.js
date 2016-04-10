@@ -4,7 +4,7 @@
  * @pararm { Element } el
  * @return { Array }
  */
-export function getClassNames( el )
+export function getClasses( el )
 {
   let classNames;
 
@@ -38,6 +38,6 @@ export function getClassNames( el )
  */
 export function getClassSelectors( el )
 {
-  const classList = getClassNames( el );
+  const classList = getClasses( el ).filter( Boolean );
   return classList.map( cl => `.${cl}` );
 }

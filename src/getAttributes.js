@@ -7,13 +7,13 @@
 export function getAttributes( el, attributesToIgnore = ['id', 'class', 'length'] )
 {
   const { attributes } = el;
-  const attributeKeys = Object.keys( attributes );
+  const attrs = [ ...attributes ];
 
-  return attributeKeys.reduce( ( sum, next ) =>
+  return attrs.reduce( ( sum, next ) =>
   {
-    if ( ! ( this.attributesToIgnore.indexOf( next ) > -1 ) )
+    if ( ! ( attributesToIgnore.indexOf( next.nodeName ) > -1 ) )
     {
-      sum.push( `[${next}=${attributes[ next ]}]` );
+      sum.push( `[${next.nodeName}="${next.value}"]` );
     }
     return sum;
   }, [] );

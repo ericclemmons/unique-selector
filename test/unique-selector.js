@@ -1,60 +1,43 @@
-var unique = '../lib';
+const jsdom = require( 'mocha-jsdom' );
+const expect = require( 'chai' ).expect;
+import unique from '../src';
 
-function assert(expr, msg) {
-  if (!expr) throw new Error(typeof msg === undefined ? 'failed' : msg);
-}
+const $ = require( 'jquery' )( require( 'jsdom' ).jsdom().defaultView );
 
-describe('unique-selector', function() {
-  describe('with undefined', function() {
-    it('should return a TypeError', function() {
-      try {
-        unique();
-        assert(false);
-      } catch (e) {
-        assert(e instanceof TypeError);
-      }
-    });
-  });
+describe( 'Unique Selector Tests', () =>
+{
+  jsdom( { skipWindowCheck : true } );
 
-  describe('with Object', function() {
-    it('should return a TypeError', function() {
-      try {
-        unique({});
-        assert(false);
-      } catch (e) {
-        assert(e instanceof TypeError);
-      }
-    });
-  });
+  it( 'Class Selector Test', () =>
+  {
+    $( 'body' ).append( '<div class="something">TEST</div>' );
+    const findNode = $( 'body' ).find( '.something' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '.something' );
+  } );
 
-  var selectors = {
-    // Selector: expected
-    'HTML > BODY': 'html > body',
-    'HTML > BODY > DIV#fixture': '#fixture',
-    'HTML > BODY > DIV#fixture > H3 > SMALL': '#fixture > h3 > small',
-    'HTML > BODY > DIV#fixture > UL#nav > LI:nth-child(1)': '#nav > li.first.item',
-    'HTML > BODY > DIV#fixture > UL#nav > LI:nth-child(2)': '#nav > li.collapsed.item:nth-child(2)',
-    'HTML > BODY > DIV#fixture > UL#nav > LI:nth-child(3)': '#nav > li.last.collapsed.item',
-    'HTML > BODY > DIV#fixture > UL#nav > LI.item > UL#nested > LI.child > IMG': '#nested > li.child > img[alt="Some Title"]',
-    'HTML > BODY > DIV#fixture > FORM > SELECT > OPTION[selected]': '#fixture > form > select[name="state"] > option[value="TX"]',
-    'HTML > BODY > DIV#fixture > FORM > P > LABEL > INPUT[checked]': '#fixture > form > p > label > input[name="computer"][value="1"]',
-    'HTML > BODY > DIV#fixture > DIV.classnames.with.extra.space > SPAN': '#fixture > div.classnames.with.extra.space > span'
-  };
+  it( 'Nth Child', () =>
+  {
+    $( 'body' ).append( '<div class="something">TEST</div><div class="something">TEST</div>' );
+    const findNode = $( 'body' ).find( '.something' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
+  } );
 
-  for (var selector in selectors) {
-    describe('with ' + selector, function() {
-      var expected  = selectors[selector];
-      var match     = selector ? document.querySelector(selector): undefined;
-      var matches   = selector ? document.querySelectorAll(selector) : undefined;
-      var actual    = match ? unique(match) : undefined;
+  it( 'Attributes', () =>
+  {
+    $( 'body' ).append( '<div class="something">TEST</div><div class="else" lol="5">TEST</div>' );
+    const findNode = $( 'body' ).find( '.else' ).get( 0 );
+    const uniqueSelector = unique( findNode, { selectorTypes : [ 'Attributes' ] } );
+    expect( uniqueSelector ).to.equal( '[lol="5"]' );
+  } );
 
-      it('should have only 1 match', function() {
-        assert(1 === matches.length, matches.length + ' matches');
-      });
+  it( 'Nth Child', () =>
+  {
+    $( 'body' ).append( '<div class="something2"></div><div class="something2"></div>' );
+    const findNode = $( 'body' ).find( '.something2' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
+  } );
 
-      it('should return `' + expected + '`', function() {
-        assert(expected === actual, actual);
-      });
-    });
-  }
-});
+} );

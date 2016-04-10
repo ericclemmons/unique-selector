@@ -2,7 +2,7 @@
  * Expose `unique`
  */
 
-import { getClassNames } from './getClassNames';
+import { getClassSelectors } from './getClasses';
 import { getAttributes } from './getAttributes';
 import { getNthChild } from './getNthChild';
 import { getTag } from './getTag';
@@ -15,15 +15,14 @@ import { getParents } from './getParents';
  * @param  { Object } element
  * @return { Object }
  */
-function getAllSelectors( el, options )
+function getAllSelectors( el, selectors )
 {
-  const { selectors } = options;
   const funcs =
     {
       'Tag'        : getTag,
       'NthChild'   : getNthChild,
       'Attributes' : getAttributes,
-      'Class'      : getClassNames,
+      'Class'      : getClassSelectors,
     };
 
   return selectors.reduce( ( res, next ) =>
@@ -41,6 +40,7 @@ function getAllSelectors( el, options )
  */
 function testUniqueness( element, selector )
 {
+  console.log( selector );
   const { parentNode } = element;
   const elements = parentNode.querySelectorAll( selector );
   return elements.length === 1 && elements[ 0 ] === element;
@@ -56,6 +56,7 @@ function testUniqueness( element, selector )
 function getUniqueCombination( element, items, tag )
 {
   const combinations = getCombinations( items );
+  console.log( '#####', combinations, items );
   const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
   if( uniqCombinations.length ) return uniqCombinations[ 0 ];
 
@@ -69,15 +70,19 @@ function getUniqueCombination( element, items, tag )
   return null;
 }
 
-
-function getUniqueSelector( el, options=['Class', 'Tag', 'NthChild'] )
+/**
+ * Returns a uniqueSelector based on the passed options
+ * @param  { DOM } element
+ * @param  { Array } options
+ * @return { String }
+ */
+function getUniqueSelector( el, selectorTypes=['Class', 'Attributes', 'Tag', 'NthChild'] )
 {
   let foundSelector;
 
-  const elementSelectors = getAllSelectors( el );
-  const { selectors } = options;
+  const elementSelectors = getAllSelectors( el, selectorTypes );
 
-  for( let selectorType of selectors )
+  for( let selectorType of selectorTypes )
   {
     const { Tag, Class : Classes, Attributes, NthChild } = elementSelectors;
     switch( selectorType )
@@ -125,6 +130,9 @@ function getUniqueSelector( el, options=['Class', 'Tag', 'NthChild'] )
   return '*';
 }
 
+/**
+ * Returns all the possible selector compinations
+ */
 function getCombinations( items )
 {
   items = items ? items : [];
@@ -159,13 +167,15 @@ function getCombinations( items )
  * @api private
  */
 
-function unique( el )
+export default function unique( el, options={} )
 {
+  const { selectorTypes=['Class', 'Attributes', 'Tag', 'NthChild'] } = options;
   const allSelectors = [];
   const parents = getParents( el );
+
   for( let elem of parents )
   {
-    const selector = getUniqueSelector( elem );
+    const selector = getUniqueSelector( elem, selectorTypes );
     if( Boolean( selector ) )
     {
       allSelectors.push( selector );
