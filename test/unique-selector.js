@@ -64,4 +64,13 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( 'a' );
   } );
 
+  it( 'Attributes', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test5" test="5"></div>' );
+    const findNode = $( '.test5' ).get( 0 );
+    const uniqueSelector = unique( findNode, { selectorTypes : ['Attributes'] });
+    expect( uniqueSelector ).to.equal( '[test="5"]' );
+  } );
+
 } );

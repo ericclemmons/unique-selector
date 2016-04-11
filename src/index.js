@@ -16,13 +16,13 @@ import { getParents } from './getParents';
  * @param  { Object } element
  * @return { Object }
  */
-function getAllSelectors( el, selectors )
+function getAllSelectors( el, selectors, attributesToIgnore )
 {
   const funcs =
     {
       'Tag'        : getTag,
       'NthChild'   : getNthChild,
-      'Attributes' : getAttributes,
+      'Attributes' : elem => getAttributes( elem, attributesToIgnore ),
       'Class'      : getClassSelectors,
       'ID'         : getID,
     };
@@ -76,12 +76,11 @@ function getUniqueCombination( element, items, tag )
  * @param  { Array } options
  * @return { String }
  */
-function getUniqueSelector( element, selectorTypes )
+function getUniqueSelector( element, selectorTypes, attributesToIgnore )
 {
   let foundSelector;
 
-  const elementSelectors = getAllSelectors( element, selectorTypes );
-  console.log( elementSelectors );
+  const elementSelectors = getAllSelectors( element, selectorTypes, attributesToIgnore );
 
   for( let selectorType of selectorTypes )
   {
@@ -168,13 +167,13 @@ function getCombinations( items )
 
 export default function unique( el, options={} )
 {
-  const { selectorTypes=[ 'ID', 'Class', 'Tag', 'NthChild' ] } = options;
+  const { selectorTypes=[ 'ID', 'Class', 'Tag', 'NthChild' ], attributesToIgnore= ['id', 'class', 'length'] } = options;
   const allSelectors = [];
   const parents = getParents( el );
 
   for( let elem of parents )
   {
-    const selector = getUniqueSelector( elem, selectorTypes );
+    const selector = getUniqueSelector( elem, selectorTypes, attributesToIgnore );
     if( Boolean( selector ) )
     {
       allSelectors.push( selector );
