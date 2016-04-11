@@ -4,8 +4,8 @@ node_js:
   - "0.12"
 script:
   - npm install
-  - npm compile
-  #- npm run test
+  - npm run compile
+  - npm run test
 install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
