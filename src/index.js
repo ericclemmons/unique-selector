@@ -2,6 +2,7 @@
  * Expose `unique`
  */
 
+import { getID } from './getID';
 import { getClassSelectors } from './getClasses';
 import { getAttributes } from './getAttributes';
 import { getNthChild } from './getNthChild';
@@ -23,6 +24,7 @@ function getAllSelectors( el, selectors )
       'NthChild'   : getNthChild,
       'Attributes' : getAttributes,
       'Class'      : getClassSelectors,
+      'ID'         : getID,
     };
 
   return selectors.reduce( ( res, next ) =>
@@ -40,7 +42,6 @@ function getAllSelectors( el, selectors )
  */
 function testUniqueness( element, selector )
 {
-  console.log( selector );
   const { parentNode } = element;
   const elements = parentNode.querySelectorAll( selector );
   return elements.length === 1 && elements[ 0 ] === element;
@@ -56,15 +57,14 @@ function testUniqueness( element, selector )
 function getUniqueCombination( element, items, tag )
 {
   const combinations = getCombinations( items );
-  console.log( '#####', combinations, items );
   const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
   if( uniqCombinations.length ) return uniqCombinations[ 0 ];
 
   if( Boolean( tag ) )
   {
-    const combinations = items.map( item => tag + item );
-    const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
-    if( uniqCombinations.length ) return uniqCombinations[ 0 ];
+      const combinations = items.map( item => tag + item );
+      const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
+      if( uniqCombinations.length ) return uniqCombinations[ 0 ];
   }
 
   return null;
@@ -76,56 +76,59 @@ function getUniqueCombination( element, items, tag )
  * @param  { Array } options
  * @return { String }
  */
-function getUniqueSelector( el, selectorTypes=['Class', 'Attributes', 'Tag', 'NthChild'] )
+function getUniqueSelector( element, selectorTypes )
 {
   let foundSelector;
 
-  const elementSelectors = getAllSelectors( el, selectorTypes );
+  const elementSelectors = getAllSelectors( element, selectorTypes );
+  console.log( elementSelectors );
 
   for( let selectorType of selectorTypes )
   {
-    const { Tag, Class : Classes, Attributes, NthChild } = elementSelectors;
-    switch( selectorType )
-    {
-
-      case 'Tag':
-        if( Boolean( Tag ) && testUniqueness( el, Tag ) )
+      const { ID, Tag, Class : Classes, Attributes, NthChild } = elementSelectors;
+      switch ( selectorType )
+      {
+        case 'ID' :
+        if ( Boolean( ID ) && testUniqueness( element, ID ) )
         {
-          return Tag;
+            return ID;
         }
         break;
 
-      case 'Class':
-        if ( Boolean( Classes ) && Classes.length )
-        {
-          foundSelector = getUniqueCombination( el, Classes, Tag );
-          if( foundSelector )
+        case 'Tag':
+          if ( Boolean( Tag ) && testUniqueness( element, Tag ) )
           {
-            return foundSelector;
+              return Tag;
           }
-        }
-        break;
+          break;
 
-      case 'Attributes':
-        if ( Boolean( Attributes ) && Attributes.length )
-        {
-          foundSelector = getUniqueCombination( el, Attributes, Tag );
-          if ( foundSelector )
+        case 'Class':
+          if ( Boolean( Classes ) && Classes.length )
           {
-            return foundSelector;
+            foundSelector = getUniqueCombination( element, Classes, Tag );
+            if (foundSelector) {
+              return foundSelector;
+            }
           }
-        }
-        break;
+          break;
 
-      case 'NthChild':
-        if ( Boolean( NthChild ) )
-        {
-          return NthChild;
-        }
-        break;
-      default :
-        return '*';
-    }
+        case 'Attributes':
+          if ( Boolean( Attributes ) && Attributes.length )
+          {
+            foundSelector = getUniqueCombination( element, Attributes, Tag );
+            if ( foundSelector )
+            {
+              return foundSelector;
+            }
+          }
+          break;
+
+        case 'NthChild':
+          if ( Boolean( NthChild ) )
+          {
+            return NthChild
+          }
+      }
   }
   return '*';
 }
@@ -139,11 +142,6 @@ function getCombinations( items )
   let result = [[]];
   let i, j, k, l, ref, ref1;
 
-  /**
-  * Create array of array with all possibe combimations
-  * e.g. an element with 2 classes will have 3 possible combimations
-  * ['.classA', '.classB'] -> ['.classA', '.classB', '.classA.classB']
-  */
   for ( i = k = 0, ref = items.length - 1; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k )
   {
     for ( j = l = 0, ref1 = result.length - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; j = 0 <= ref1 ? ++l : --l )
@@ -155,6 +153,7 @@ function getCombinations( items )
   result.shift();
   result = result.sort( ( a, b ) => a.length - b.length );
   result = result.map( item => item.join( '' ) );
+
   return result;
 }
 
@@ -169,7 +168,7 @@ function getCombinations( items )
 
 export default function unique( el, options={} )
 {
-  const { selectorTypes=['Class', 'Attributes', 'Tag', 'NthChild'] } = options;
+  const { selectorTypes=[ 'ID', 'Class', 'Tag', 'NthChild' ] } = options;
   const allSelectors = [];
   const parents = getParents( el );
 

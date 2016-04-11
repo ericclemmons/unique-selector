@@ -8,36 +8,60 @@ describe( 'Unique Selector Tests', () =>
 {
   jsdom( { skipWindowCheck : true } );
 
-  it( 'Class Selector Test', () =>
+  it( 'ID', () =>
   {
-    $( 'body' ).append( '<div class="something">TEST</div>' );
-    const findNode = $( 'body' ).find( '.something' ).get( 0 );
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="so" class="test3"></div>' );
+    const findNode = $( 'body' ).find( '.test3' ).get( 0 );
     const uniqueSelector = unique( findNode );
-    expect( uniqueSelector ).to.equal( '.something' );
+    expect( uniqueSelector ).to.equal( '#so' );
   } );
 
-  it( 'Nth Child', () =>
+  it( 'Class', () =>
   {
-    $( 'body' ).append( '<div class="something">TEST</div><div class="something">TEST</div>' );
-    const findNode = $( 'body' ).find( '.something' ).get( 0 );
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test2"></div>' );
+    const findNode = $( 'body' ).find( '.test2' ).get( 0 );
     const uniqueSelector = unique( findNode );
-    expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
+    expect( uniqueSelector ).to.equal( '.test2' );
   } );
 
-  it( 'Attributes', () =>
+  it( 'Classes', () =>
   {
-    $( 'body' ).append( '<div class="something">TEST</div><div class="else" lol="5">TEST</div>' );
-    const findNode = $( 'body' ).find( '.else' ).get( 0 );
-    const uniqueSelector = unique( findNode, { selectorTypes : [ 'Attributes' ] } );
-    expect( uniqueSelector ).to.equal( '[lol="5"]' );
-  } );
-
-  it( 'Nth Child', () =>
-  {
-    $( 'body' ).append( '<div class="something2"></div><div class="something2"></div>' );
-    const findNode = $( 'body' ).find( '.something2' ).get( 0 );
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test2"></div><div class="test2"></div>' );
+    const findNode = $( 'body' ).find( '.test2' ).get( 0 );
     const uniqueSelector = unique( findNode );
     expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
+  } );
+
+
+  it( 'Tag', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test2"><span></span></div><div class="test2"></div>' );
+    const findNode = $( '.test2' ).find( 'span' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( 'span' );
+  } );
+
+
+  it( 'Tag', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test5"><span></span></div><div class="test5"><span></span></div>' );
+    const findNode = $( '.test5' ).find( 'span' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( ':nth-child(1) > span' );
+  } );
+
+  it( 'Tag', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test5"><span><ul><li><a></a></li></ul></span></div><div class="test5"><span></span></div>' );
+    const findNode = $( '.test5' ).find( 'a' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( 'a' );
   } );
 
 } );
