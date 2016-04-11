@@ -2,6 +2,8 @@ unique-selector
 ===============
 
 [![Build Status](https://travis-ci.org/ericclemmons/unique-selector.png)](https://travis-ci.org/ericclemmons/unique-selector)
+[![CocoaPods](https://img.shields.io/cocoapods/l/AFNetworking.svg)]()
+[![semantic-versioning](https://img.shields.io/badge/semantic%20-versioning-green.svg)]()
 
 Given a DOM node, return a unique CSS selector matching only that element.
 This is particularly useful when tracking in custom variables in analytics:
@@ -23,13 +25,18 @@ Installation
 Tests
 -----
 
-    $ npm install
-    $ make
-    $ open test/index.html
+    $ npm run test
 
 
 Releases
 --------
+- v0.1.0
+
+    - Big refactor/write using es6
+    - More test + Change the test script
+    - Scripts to compile
+    - Generate the smallest possible selector e.g. `:nth-child(1)` instead of `body > :nth-child(1)`
+  
 
 - v0.0.4
 
