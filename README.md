@@ -21,6 +21,32 @@ Installation
 
     component install ericclemmons/unique-selector
 
+Options
+------------
+e.g.1 DomElement = `<span id="test"></span>`
+
+``` 
+// Optional Options
+options = {
+    // Array of selector types based on which the unique selector will be generate
+    selectorTypes : [ 'ID', 'Class', 'Tag', 'NthChild' ]
+}
+
+unique( DomElement, options ); // #test
+```
+
+e.g.2 DomElement = `<span test="2"></span>`
+
+```
+// Optional Options
+options = {
+    // Array of selector types based on which the unique selector will be generate
+    selectorTypes : [ 'Attributes' ]
+}
+
+unique( DomElement, options ); // [test="2"]
+```
+
 
 Tests
 -----
@@ -36,7 +62,8 @@ Releases
     - More test + Change the test script
     - Scripts to compile
     - Generate the smallest possible selector e.g. `:nth-child(1)` instead of `body > :nth-child(1)`
-  
+    - Ability to pass options for the selectorTypes based on which the unique selector will be generated
+
 
 - v0.0.4
 
@@ -63,4 +90,3 @@ MIT
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ericclemmons/unique-selector/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
