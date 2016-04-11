@@ -1,10 +1,10 @@
 language: node_js
 node_js:
   - "4.1"
-  - "0.12"
+  - "5.1"
+  - "iojs"
 script:
   - npm install
-  - npm run compile
   - npm run test
 install:
   - export DISPLAY=':99.0'
