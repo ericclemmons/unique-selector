@@ -19,13 +19,15 @@ This is particularly useful when tracking in custom variables in analytics:
 Installation
 ------------
 
-    component install ericclemmons/unique-selector
+[![NPM](https://nodei.co/npm/unique-selector.png?mini=true)](https://nodei.co/npm/unique-selector/)
 
 Options
 ------------
 e.g.1 DomElement = `<span id="test"></span>`
 
 ``` 
+import unique from 'unique-selector';
+
 // Optional Options
 options = {
     // Array of selector types based on which the unique selector will be generate
@@ -38,6 +40,8 @@ unique( DomElement, options ); // #test
 e.g.2 DomElement = `<span test="2"></span>`
 
 ```
+import unique from 'unique-selector';
+
 // Optional Options
 options = {
     // Array of selector types based on which the unique selector will be generate
@@ -53,16 +57,29 @@ Tests
 
     $ npm run test
 
+    
+Contributing
+-----
+Feel free to open issues, make suggestions or send PRs.
+This project adheres to the Contributor Covenant [code of conduct](http://contributor-covenant.org/). By participating, you are expected to uphold this code.
+
+
+Contact
+-----
+
+Avraam Mavridis : [@avraamakis](https://twitter.com/avraamakis)
+
+Eric Clemmons : [@ericclemmons](https://twitter.com/ericclemmons)
+
 
 Releases
 --------
 - v0.1.0
 
-    - Big refactor/write using es6
+    - Big refactor/rewrite using es6
     - More test + Change the test script
-    - Scripts to compile
-    - Generate the smallest possible selector e.g. `:nth-child(1)` instead of `body > :nth-child(1)`
-    - Ability to pass options for the selectorTypes based on which the unique selector will be generated
+    - Script to compile es6 to es5 using babel
+    - Ability to pass options for the **selectorTypes** based on which the unique selector will be generated, see the options
 
 
 - v0.0.4
@@ -89,4 +106,4 @@ License
 MIT
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ericclemmons/unique-selector/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/AvraamMavridis/unique-selector/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
