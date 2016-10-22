@@ -133,7 +133,7 @@ function getUniqueSelector( element, selectorTypes, attributesToIgnore )
 }
 
 /**
- * Returns all the possible selector compinations
+ * Returns all the possible selector combinations
  */
 function getCombinations( items )
 {
