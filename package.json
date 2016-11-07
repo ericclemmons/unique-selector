@@ -1,6 +1,6 @@
 {
   "name": "unique-selector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Given a DOM node, return a unique CSS selector matching only that element",
   "main": "./lib/index.js",
   "directories": {
