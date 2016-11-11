@@ -5,13 +5,17 @@ export function isElement( el )
 {
   let isElem;
 
-  if ( typeof HTMLElement === 'object' )
+  if ( el && el.tagName !== 'HTML' )
   {
-    isElem = el instanceof HTMLElement;
+    if ( typeof HTMLElement === 'object' )
+    {
+      isElem = el instanceof HTMLElement;
+    }
+    else
+    {
+      isElem = !!el && ( typeof el === 'object' ) && el.nodeType === 1 && typeof el.nodeName === 'string';
+    }
   }
-  else
-  {
-    isElem = !!el && ( typeof el === 'object' ) && el.nodeType === 1 && typeof el.nodeName === 'string';
-  }
+
   return isElem;
 }
