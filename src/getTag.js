@@ -5,5 +5,5 @@
  */
 export function getTag( el )
 {
-  return el.tagName.toLowerCase();
+  return el.tagName.toLowerCase().replace(/:/g, '\\:');
 }
