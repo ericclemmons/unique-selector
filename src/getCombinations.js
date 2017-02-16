@@ -1,0 +1,31 @@
+function kCombinations( result, items, data, start, end, index, k )
+{
+    if( index === k )
+    {
+        result.push( data.slice( 0, index ).join( '' ) );
+        return;
+    }
+
+    for( let i = start; i <= end && end - i + 1 >= k - index; ++i )
+    {
+        data[index] = items[i];
+        kCombinations( result, items, data, i + 1, end, index + 1, k );
+    }
+}
+
+/**
+ * Returns all the possible selector combinations
+ */
+export function getCombinations( items, k )
+{
+    const result = [],
+          n = items.length,
+          data = [];
+
+    for( var l = 1; l <= k; ++l )
+    {
+        kCombinations( result, items, data, 0, n - 1, 0, l );
+    }
+
+    return result;
+}
