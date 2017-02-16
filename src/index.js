@@ -48,6 +48,17 @@ function testUniqueness( element, selector )
 }
 
 /**
+ * Tests all selectors for uniqueness and returns the first unique selector.
+ * @param  { Object } element
+ * @param  { Array } selectors
+ * @return { String }
+ */
+function getFirstUnique( element, selectors )
+{
+    return selectors.find( testUniqueness.bind( null, element ) );
+}
+
+/**
  * Checks all the possible selectors of an element to find one unique and return it
  * @param  { Object } element
  * @param  { Array } items
@@ -56,15 +67,23 @@ function testUniqueness( element, selector )
  */
 function getUniqueCombination( element, items, tag )
 {
-  const combinations = getCombinations( items );
-  const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
-  if( uniqCombinations.length ) return uniqCombinations[ 0 ];
+  let combinations = getCombinations( items ),
+      firstUnique = getFirstUnique( element, combinations );
+
+  if( Boolean( firstUnique ) )
+  {
+      return firstUnique;
+  }
 
   if( Boolean( tag ) )
   {
-      const combinations = items.map( item => tag + item );
-      const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
-      if( uniqCombinations.length ) return uniqCombinations[ 0 ];
+      combinations = combinations.map( combination => tag + combination );
+      firstUnique = getFirstUnique( element, combinations );
+
+      if( Boolean( firstUnique ) )
+      {
+          return firstUnique;
+      }
   }
 
   return null;
