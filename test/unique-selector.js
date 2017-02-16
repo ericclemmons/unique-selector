@@ -35,6 +35,15 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
   } );
 
+  it( 'Classes', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test2 ca cb cc cd cx"></div><div class="test2 ca cb cc cd ce"></div><div class="test2 ca cb cc cd ce"></div><div class="test2 ca cb cd ce cf cx"></div>' );
+    const findNode = $( 'body' ).find( '.test2' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '.cc.cx' );
+  } );
+
 
   it( 'Tag', () =>
   {
