@@ -5,5 +5,11 @@
  */
 export function getID( el )
 {
-  return `#${el.getAttribute( 'id' )}`;
+  const id = el.getAttribute( 'id' );
+
+  if( id !== null )
+  {
+    return `#${id}`;
+  }
+  return null;
 }
