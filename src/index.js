@@ -4,6 +4,7 @@
 
 import { getID } from './getID';
 import { getClassSelectors } from './getClasses';
+import { getCombinations } from './getCombinations';
 import { getAttributes } from './getAttributes';
 import { getNthChild } from './getNthChild';
 import { getTag } from './getTag';
@@ -56,7 +57,7 @@ function testUniqueness( element, selector )
  */
 function getUniqueCombination( element, items, tag )
 {
-  const combinations = getCombinations( items );
+  const combinations = getCombinations( items, 3 );
   const uniqCombinations = combinations.filter( testUniqueness.bind( this, element ) );
   if( uniqCombinations.length ) return uniqCombinations[ 0 ];
 
@@ -131,31 +132,6 @@ function getUniqueSelector( element, selectorTypes, attributesToIgnore )
   }
   return '*';
 }
-
-/**
- * Returns all the possible selector combinations
- */
-function getCombinations( items )
-{
-  items = items ? items : [];
-  let result = [[]];
-  let i, j, k, l, ref, ref1;
-
-  for ( i = k = 0, ref = items.length - 1; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k )
-  {
-    for ( j = l = 0, ref1 = result.length - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; j = 0 <= ref1 ? ++l : --l )
-    {
-      result.push( result[ j ].concat( items[ i ] ) );
-    }
-  }
-
-  result.shift();
-  result = result.sort( ( a, b ) => a.length - b.length );
-  result = result.map( item => item.join( '' ) );
-
-  return result;
-}
-
 
 /**
  * Generate unique CSS selector for given DOM element
