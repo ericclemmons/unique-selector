@@ -1,3 +1,13 @@
+/**
+ * Recursively combinate items.
+ * @param  { Array } result
+ * @param  { Array } items
+ * @param  { Array } data
+ * @param  { Number } start
+ * @param  { Number } end
+ * @param  { Number } index
+ * @param  { Number } k
+ */
 function kCombinations( result, items, data, start, end, index, k )
 {
     if( index === k )
@@ -15,6 +25,9 @@ function kCombinations( result, items, data, start, end, index, k )
 
 /**
  * Returns all the possible selector combinations
+ * @param  { Array } items
+ * @param  { Number } k
+ * @return { Array }
  */
 export function getCombinations( items, k )
 {
