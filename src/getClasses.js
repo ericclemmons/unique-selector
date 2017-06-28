@@ -6,29 +6,22 @@
  */
 export function getClasses( el )
 {
-  let classNames;
-
-  try
+  if( !el.hasAttribute( 'class' ) )
   {
-    classNames = el.classList.toString().split( ' ' );
+    return [];
   }
-  catch ( e )
-  {
-    if( !el.hasAttribute( 'class' ) )
-    {
-      return [];
-    }
 
+  try {
+    return Array.from(el.classList);
+  } catch (e) {
     let className = el.getAttribute( 'class' );
 
     // remove duplicate and leading/trailing whitespaces
     className = className.trim().replace( /\s+/g, ' ' );
 
     // split into separate classnames
-    classNames = className.split( ' ' );
+    return className.split( ' ' );
   }
-
-  return classNames;
 }
 
 /**
