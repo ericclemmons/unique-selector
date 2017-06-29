@@ -1,5 +1,3 @@
-import "core-js/modules/es6.array.from";
-
 /**
  * Get class names for an element
  *
@@ -14,7 +12,7 @@ export function getClasses( el )
   }
 
   try {
-    return Array.from(el.classList);
+    return Array.prototype.slice.call( el.classList );
   } catch (e) {
     let className = el.getAttribute( 'class' );
 
