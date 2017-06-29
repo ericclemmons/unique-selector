@@ -1,3 +1,5 @@
+import "core-js/modules/es6.array.from";
+
 /**
  * Get class names for an element
  *
