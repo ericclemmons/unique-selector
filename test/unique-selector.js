@@ -44,6 +44,14 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( '.cc.cx' );
   } );
 
+  it( 'Classes with newline', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div class="test2\n ca\n cb\n cc\n cd\n cx"></div><div class="test2\n ca\n cb\n cc\n cd\n ce"></div><div class="test2\n ca\n cb\n cc\n cd\n ce"></div><div class="test2\n ca\n cb\n cd\n ce\n cf\n cx"></div>' );
+    const findNode = $( 'body' ).find( '.test2' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '.cc.cx' );
+  } );
 
   it( 'Tag', () =>
   {
