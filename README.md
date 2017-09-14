@@ -30,7 +30,7 @@ import unique from 'unique-selector';
 
 // Optional Options
 options = {
-    // Array of selector types based on which the unique selector will be generate
+    // Array of selector types based on which the unique selector will generate
     selectorTypes : [ 'ID', 'Class', 'Tag', 'NthChild' ]
 }
 
