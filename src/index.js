@@ -108,7 +108,7 @@ function getUniqueSelector( element, selectorTypes, attributesToIgnore )
       switch ( selectorType )
       {
         case 'ID' :
-        if ( Boolean( ID ) && testUniqueness( element, ID ) )
+        if ( Boolean( ID ) && !ID.match(/^#\d+/) && testUniqueness( element, ID ) )
         {
             return ID;
         }
