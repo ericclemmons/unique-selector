@@ -8,6 +8,25 @@ describe( 'Unique Selector Tests', () =>
 {
   jsdom( { skipWindowCheck : true } );
 
+  it( 'ID begin with a number', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="1234a" class="test5"></div>' );
+    const findNode = $( 'body' ).find( '.test5' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '.test5' );
+  } );
+
+  it( 'ID consist of numbers only', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="1234" class="test4"></div>' );
+    const findNode = $( 'body' ).find( '.test4' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '.test4' );
+  } );
+
+
   it( 'ID', () =>
   {
     $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
