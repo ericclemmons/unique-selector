@@ -17,6 +17,15 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( '#so' );
   } );
 
+  it( 'ID', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="1so" class="test3"></div>' );
+    const findNode = $( 'body' ).find( '.test3' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '[id="1so"]' );
+  } );
+
   it( 'Class', () =>
   {
     $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
