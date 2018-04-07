@@ -96,11 +96,17 @@ function getUniqueCombination( element, items, tag )
  * @param  { Array } options
  * @return { String }
  */
-function getUniqueSelector( element, selectorTypes, attributesToIgnore )
+function getUniqueSelector( element, selectorTypes, attributesToIgnore, excludeRegex )
 {
   let foundSelector;
 
   const elementSelectors = getAllSelectors( element, selectorTypes, attributesToIgnore );
+
+  if( excludeRegex && excludeRegex instanceof RegExp )
+  {
+    elementSelectors.ID = excludeRegex.test( elementSelectors.ID ) ? null : elementSelectors.ID;
+    elementSelectors.Class = elementSelectors.Class.filter( className => !excludeRegex.test( className ) );
+  }
 
   for( let selectorType of selectorTypes )
   {
@@ -162,13 +168,17 @@ function getUniqueSelector( element, selectorTypes, attributesToIgnore )
 
 export default function unique( el, options={} )
 {
-  const { selectorTypes=[ 'ID', 'Class', 'Tag', 'NthChild' ], attributesToIgnore= ['id', 'class', 'length'] } = options;
+  const {
+    selectorTypes = ['ID', 'Class', 'Tag', 'NthChild'],
+    attributesToIgnore = ['id', 'class', 'length'],
+    excludeRegex = null,
+  } = options;
   const allSelectors = [];
   const parents = getParents( el );
 
   for( let elem of parents )
   {
-    const selector = getUniqueSelector( elem, selectorTypes, attributesToIgnore );
+    const selector = getUniqueSelector( elem, selectorTypes, attributesToIgnore, excludeRegex );
     if( Boolean( selector ) )
     {
       allSelectors.push( selector );

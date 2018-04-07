@@ -25,7 +25,7 @@ Options
 ------------
 e.g.1 DomElement = `<span id="test"></span>`
 
-``` 
+```
 import unique from 'unique-selector';
 
 // Optional Options
@@ -51,13 +51,27 @@ options = {
 unique( DomElement, options ); // [test="2"]
 ```
 
+e.g.3 DomElement = `<div id="xyz" class="abc test"></div>`
+
+```
+import unique from 'unique-selector';
+
+// Optional Options
+options = {
+    // Regular expression of ID and class names to ignore
+    excludeRegex : RegExp( 'xyz|abc' )
+}
+
+unique( DomElement, options ); // .test
+```
+
 
 Tests
 -----
 
     $ npm run test
 
-    
+
 Contributing
 -----
 Feel free to open issues, make suggestions or send PRs.
