@@ -12,7 +12,8 @@ export function getClasses( el )
   }
 
   try {
-    return Array.prototype.slice.call( el.classList );
+    return Array.prototype.slice.call( el.classList )
+      .filter( item => !( /^\d/.test( item ) ) );
   } catch (e) {
     let className = el.getAttribute( 'class' );
 
@@ -20,7 +21,8 @@ export function getClasses( el )
     className = className.trim().replace( /\s+/g, ' ' );
 
     // split into separate classnames
-    return className.split( ' ' );
+    return className.split( ' ' )
+      .filter( item => !( /^\d/.test( item ) ) );
   }
 }
 
