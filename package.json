@@ -1,7 +1,7 @@
 {
-  "name": "unique-selector",
-  "version": "0.3.6",
-  "description": "Given a DOM node, return a unique CSS selector matching only that element",
+  "name": "unique-selector-fixed",
+  "version": "0.3.7",
+  "description": "Given a DOM node, return a unique, valid CSS selector matching only that element",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
   "directories": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ericclemmons/unique-selector.git"
+    "url": "git://github.com/nickforddesign/unique-selector.git"
   },
   "keywords": [
     "dom",
@@ -35,6 +35,10 @@
     {
       "name": "Avraam Mavridis",
       "email": "avr.mav@gmail.com"
+    },
+    {
+      "name": "Nick Ford",
+      "email": "nickforddesign@gmail.com"
     }
   ],
   "license": "MIT",
@@ -52,7 +56,7 @@
     "jquery": "^2.2.3",
     "jsdom": "^8.3.0",
     "mocha": "~1.7.4",
-    "mocha-jsdom": "^1.1.0",
+    "mocha-jsdom": "~1.1.0",
     "mocha-phantomjs": "~1.1.1"
   }
 }
