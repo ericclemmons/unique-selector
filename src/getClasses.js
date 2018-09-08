@@ -11,10 +11,13 @@ export function getClasses( el )
     return [];
   }
 
-  try {
-    return Array.prototype.slice.call( el.classList );
-  } catch (e) {
-    let className = el.getAttribute( 'class' );
+    try {
+      let classList = Array.prototype.slice.call( el.classList )
+
+      // return only the valid CSS selectors based on RegEx
+      return classList.filter(item => !/^[a-z_-][a-z\d_-]*$/i.test( item ) ? null : item );
+    } catch (e) {
+      let className = el.getAttribute( 'class' );
 
     // remove duplicate and leading/trailing whitespaces
     className = className.trim().replace( /\s+/g, ' ' );
