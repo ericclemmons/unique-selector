@@ -35,7 +35,7 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( 'body > :nth-child(1)' );
   } );
 
-  it( 'Classes', () =>
+  it( 'Classes multiple', () =>
   {
     $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
     $( 'body' ).append( '<div class="test2 ca cb cc cd cx"></div><div class="test2 ca cb cc cd ce"></div><div class="test2 ca cb cc cd ce"></div><div class="test2 ca cb cd ce cf cx"></div>' );
@@ -106,6 +106,16 @@ describe( 'Unique Selector Tests', () =>
     const findNode = $( '.test5' ).get( 0 );
     const uniqueSelector = unique( findNode, { selectorTypes : ['Attributes'] });
     expect( uniqueSelector ).to.equal( '[test="5"]' );
+  } );
+
+  it( 'ID with exclude regex option', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="xyz" class="abc test"></div>' );
+    const findNode = $( 'body' ).find( '.test' ).get( 0 );
+    const options = { excludeRegex : RegExp( 'xyz|abc' ) };
+    const uniqueSelector = unique( findNode, options );
+    expect( uniqueSelector ).to.equal( '.test' );
   } );
 
 } );
