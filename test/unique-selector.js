@@ -1,6 +1,6 @@
 const jsdom = require( 'mocha-jsdom' );
 const expect = require( 'chai' ).expect;
-import unique from '../src';
+import { unique, } from '../index';
 
 const $ = require( 'jquery' )( require( 'jsdom' ).jsdom().defaultView );
 
