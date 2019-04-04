@@ -1,0 +1,59 @@
+{
+  "source": "./lib",
+  "destination": "./docs",
+  "plugins": [
+    {
+      "name": "@repetere/esdoc-inject-gtm-plugin", 
+      "option": {
+        "enable": true, 
+        "id": "UA-112697260-2"
+      }
+    },
+    {
+      "name": "esdoc-ecmascript-proposal-plugin",
+      "option": {"all": true}
+    },
+    {
+      "name": "esdoc-standard-plugin",
+      "option":{
+        "typeInference": {
+          "enable": false
+        },
+        "lint": {
+          "enable": false
+        },
+        "brand": {
+          "title": "Event Logger Shopify",
+          "description": "Logging Shopify Click Events",
+          "repository": "https://github.com/jewelml/event_logger_shopify",
+          "site": "https://jewelml.github.io/event_logger_shopify",
+          "author": "https://github.com/jewelml",
+          "image": "https://jewelml.com/favicon.png"
+        },
+        "manual": {
+          "index": "./README.md",
+          "asset": "./manual/asset",
+          "files": [
+            "./manual/overview.md",
+            "./manual/usage.md",
+            "./manual/faq.md",
+            "./CHANGELOG.md"
+          ]
+        },
+        "test": {
+          "source": "./test/",
+          "interfaces": ["describe", "it", "context", "suite", "test"],
+          "includes": ["(spec|Spec|test|Test)\\.mjs$"],
+          "excludes": ["\\.config\\.js$"]
+        }
+      }
+    },
+    {
+      "name": "esdoc-publish-markdown-plugin",
+      "option": {
+        "filename":"./API.md"
+      }
+    }
+  ],
+  "includes": ["\\.mjs$"]
+}

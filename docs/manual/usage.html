@@ -1,0 +1,102 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Manual | Event Logger Shopify</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112697260-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-112697260-2');
+  </script><meta name="description" content="Logging Shopify Click Events"><meta property="og:type" content="website"><meta property="og:url" content="https://jewelml.github.io/event_logger_shopify"><meta property="og:site_name" content="Event Logger Shopify"><meta property="og:title" content="Event Logger Shopify"><meta property="og:image" content="https://jewelml.com/favicon.png"><meta property="og:description" content="Logging Shopify Click Events"><meta property="og:author" content="https://github.com/jewelml"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Logger Shopify"><meta property="twitter:description" content="Logging Shopify Click Events"><meta property="twitter:image" content="https://jewelml.com/favicon.png"></head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/jewelml/event_logger_shopify"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/overview.html"><a href="manual/overview.html" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#configuration" data-ice="link">Configuration</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#model-constructor-example" data-ice="link">Model constructor example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#training" data-ice="link">Training</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#training-example" data-ice="link">Training example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#predicting" data-ice="link">Predicting</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#predicting-example" data-ice="link">Predicting example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#examples" data-ice="link">Examples</a></li>
+</ul>
+  </div>
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/usage.html"><a href="manual/usage.html" data-ice="link">Frequently Asked Questions</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage.html"><a href="manual/usage.html#scaling" data-ice="link">Scaling</a></li>
+</ul>
+  </div>
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/faq.html"><a href="manual/faq.html" data-ice="link">Frequently Asked Questions</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/faq.html"><a href="manual/faq.html#scaling" data-ice="link">Scaling</a></li>
+</ul>
+  </div>
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/CHANGELOG.html"><a href="manual/CHANGELOG.html" data-ice="link">Changelog</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/CHANGELOG.html"><a href="manual/CHANGELOG.html#1-0-0--2018-07-30-" data-ice="link">1.0.0 (2018-07-30)</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown" data-ice="content"><h1 id="frequently-asked-questions">Frequently Asked Questions</h1><h2 id="scaling">Scaling</h2><ul>
+<li><strong>How do I scale and descale my inputs?</strong><ul>
+<li>The library is only for model create, data engineering and modeling is typically handled elsewhere</li>
+<li>Check out the regression examples (hint: use <a href="https://repetere.github.io/modelscript/">ModelScript</a>).</li>
+</ul>
+</li>
+<li><strong>How do I cross validate, test/train split, K-fold, etc?</strong><ul>
+<li>(See above) The library is only for model create, data engineering and modeling is typically handled elsewhere</li>
+<li>Check out the code examples (hint: use <a href="https://repetere.github.io/modelscript/">ModelScript</a>).</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>

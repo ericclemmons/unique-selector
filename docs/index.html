@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | Event Logger Shopify</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112697260-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-112697260-2');
+  </script><meta name="description" content="Logging Shopify Click Events"><meta property="og:type" content="website"><meta property="og:url" content="https://jewelml.github.io/event_logger_shopify"><meta property="og:site_name" content="Event Logger Shopify"><meta property="og:title" content="Event Logger Shopify"><meta property="og:image" content="https://jewelml.com/favicon.png"><meta property="og:description" content="Logging Shopify Click Events"><meta property="og:author" content="https://github.com/jewelml"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Logger Shopify"><meta property="twitter:description" content="Logging Shopify Click Events"><meta property="twitter:image" content="https://jewelml.com/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/jewelml/event_logger_shopify"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  </ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="unique-selector">unique-selector</h1><p><a href="https://travis-ci.org/ericclemmons/unique-selector"><img src="https://travis-ci.org/ericclemmons/unique-selector.png" alt="Build Status"></a>
+<a href=""><img src="https://img.shields.io/cocoapods/l/AFNetworking.svg" alt="CocoaPods"></a>
+<a href=""><img src="https://img.shields.io/badge/semantic%20-versioning-green.svg" alt="semantic-versioning"></a></p>
+<p>Given a DOM node, return a unique CSS selector matching only that element.
+This is particularly useful when tracking in custom variables in analytics:</p>
+<pre><code><code class="source-code prettyprint">document.addEventListener(&apos;click&apos;, function(event) {
+    var selector = unique(event.target);
+
+    _gaq.push([&apos;_trackEvent&apos;, &apos;Engagement&apos;, &apos;Click&apos;, selector]);
+}, false);</code>
+</code></pre><h2 id="installation">Installation</h2><p><a href="https://nodei.co/npm/unique-selector/"><img src="https://nodei.co/npm/unique-selector.png?mini=true" alt="NPM"></a></p>
+<h2 id="options">Options</h2><p>e.g.1 DomElement = <code>&lt;span id=&quot;test&quot;&gt;&lt;/span&gt;</code></p>
+<pre><code><code class="source-code prettyprint">import unique from &apos;unique-selector&apos;;
+
+// Optional Options
+options = {
+    // Array of selector types based on which the unique selector will generate
+    selectorTypes : [ &apos;ID&apos;, &apos;Class&apos;, &apos;Tag&apos;, &apos;NthChild&apos; ]
+}
+
+unique( DomElement, options ); // #test</code>
+</code></pre><p>e.g.2 DomElement = <code>&lt;span test=&quot;2&quot;&gt;&lt;/span&gt;</code></p>
+<pre><code><code class="source-code prettyprint">import unique from &apos;unique-selector&apos;;
+
+// Optional Options
+options = {
+    // Array of selector types based on which the unique selector will be generate
+    selectorTypes : [ &apos;Attributes&apos; ]
+}
+
+unique( DomElement, options ); // [test=&quot;2&quot;]</code>
+</code></pre><p>e.g.3 DomElement = <code>&lt;div id=&quot;xyz&quot; class=&quot;abc test&quot;&gt;&lt;/div&gt;</code></p>
+<pre><code><code class="source-code prettyprint">import unique from &apos;unique-selector&apos;;
+
+// Optional Options
+options = {
+    // Regular expression of ID and class names to ignore
+    excludeRegex : RegExp( &apos;xyz|abc&apos; )
+}
+
+unique( DomElement, options ); // .test</code>
+</code></pre><h2 id="tests">Tests</h2><pre><code><code class="source-code prettyprint">$ npm run test</code>
+</code></pre><h2 id="contributing">Contributing</h2><p>Feel free to open issues, make suggestions or send PRs.
+This project adheres to the Contributor Covenant <a href="http://contributor-covenant.org/">code of conduct</a>. By participating, you are expected to uphold this code.</p>
+<h2 id="contact">Contact</h2><p>Avraam Mavridis : <a href="https://twitter.com/avraamakis">@avraamakis</a></p>
+<p>Eric Clemmons : <a href="https://twitter.com/ericclemmons">@ericclemmons</a></p>
+<h2 id="releases">Releases</h2><ul>
+<li><p>v0.1.0</p>
+<ul>
+<li>Big refactor/rewrite using es6</li>
+<li>More test + Change the test script</li>
+<li>Script to compile es6 to es5 using babel</li>
+<li>Ability to pass options for the <strong>selectorTypes</strong> based on which the unique selector will be generated, see the options</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>v0.0.4</p>
+<ul>
+<li>Handle extra whitespace in <code>className</code> (<a href="https://github.com/ericclemmons/unique-selector/pull/9">#9</a>)</li>
+</ul>
+</li>
+<li><p>v0.0.3</p>
+<ul>
+<li>Add support for various <code>&lt;form&gt;</code> elements (<a href="https://github.com/ericclemmons/unique-selector/issues/2">#2</a>)</li>
+</ul>
+</li>
+<li><p>v0.0.2</p>
+<ul>
+<li>Fix bug with <code>nth-child</code> calculation</li>
+</ul>
+</li>
+<li><p>v0.0.1</p>
+<ul>
+<li>Initial release</li>
+</ul>
+</li>
+</ul>
+<h2 id="license">License</h2><p>MIT</p>
+<p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/AvraamMavridis/unique-selector/trend.png" alt="Bitdeli Badge"></a></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>

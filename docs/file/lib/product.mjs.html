@@ -1,0 +1,252 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/product.mjs | Event Logger Shopify</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112697260-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-112697260-2');
+  </script><meta name="description" content="Logging Shopify Click Events"><meta property="og:type" content="website"><meta property="og:url" content="https://jewelml.github.io/event_logger_shopify"><meta property="og:site_name" content="Event Logger Shopify"><meta property="og:title" content="Event Logger Shopify"><meta property="og:image" content="https://jewelml.com/favicon.png"><meta property="og:description" content="Logging Shopify Click Events"><meta property="og:author" content="https://github.com/jewelml"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Logger Shopify"><meta property="twitter:description" content="Logging Shopify Click Events"><meta property="twitter:image" content="https://jewelml.com/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/jewelml/event_logger_shopify"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/product.mjs~Product.html">Product</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/store.mjs~Store.html">Store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/user.mjs~User.html">User</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-initialize">initialize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-trackEvents">trackEvents</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-captureImpressions">captureImpressions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkImpressions">checkImpressions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getEventsFromProducts">getEventsFromProducts</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getObjectFromInstance">getObjectFromInstance</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTrackingFetchOptions">getTrackingFetchOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-redirect">redirect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sendImpressions">sendImpressions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-debugQueryStringParam">debugQueryStringParam</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-trackerPath">trackerPath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-cookieName">cookieName</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/product.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">export const debugQueryStringParam = &apos;jmldbg&apos;;
+export const trackerPath = (window.location.search.includes(&apos;jmltl&apos;))
+  ? &apos;https://local-jewelml.repapp.io:8900/automation/auth/auto/go/bqs/?skip_session=true&amp;format=json&apos;
+  : &apos;https://jewelml.repapp.io/automation/auth/auto/go/bqs/?skip_session=true&amp;format=json&apos;;
+
+export class Product{
+  static getQuerySelectors() {
+    const title = window.__jml_ptqsa || &apos;.grid-view-item__title&apos;;
+    const price = window.__jml_ppqsa || &apos;.price-item--regular&apos;;
+    const sale = window.__jml_psqsa || &apos;.price-item--sale&apos;;
+    return {
+      title,
+      price,
+      sale,
+    };
+  }
+  constructor(element, options = {}) {
+    const { selectors, } = options;
+    const productSelectors = Object.assign({}, Product.getQuerySelectors(), selectors);
+    // console.debug({ productSelectors, });
+    const title = element.querySelector(productSelectors.title);
+    const price = element.querySelector(productSelectors.price);
+    const sale = element.querySelector(productSelectors.sale);
+    this.element = element;
+    this.debug = window.location.search.includes(debugQueryStringParam);
+    this.product_impression = false;
+    this.product_impression_date;
+    this.product_clicked_date;
+    this.product_clicked = false;
+    this.product_links = Array.from(element.querySelectorAll(&apos;a&apos;)).map(a=&gt;a.href);
+    this.product_id;
+    this.product_title = title ? title.innerText : undefined;
+    this.product_price = price ? price.innerText : undefined;
+    this.product_price_sale = sale ? sale.innerText : undefined;
+    this.isInViewport();
+  }
+  isInViewport() {
+    const elementPosition = this.element.getBoundingClientRect();
+    const elementTop = elementPosition.top;
+    const elementBottom = elementTop + elementPosition.height;
+    const viewportTop = window.pageYOffset;
+    const viewportBottom = viewportTop + window.innerHeight;
+    const impression = elementBottom &gt; viewportTop &amp;&amp; elementBottom &lt; viewportBottom &amp;&amp; elementTop &lt; viewportBottom &amp;&amp; elementTop &gt; viewportTop;
+    if (impression) {
+      this.product_impression = true;
+      this.product_impression_date = new Date();
+    } 
+    if (this.debug) this.debugInViewport({ elementBottom, viewportTop, elementTop, viewportBottom, impression, });
+    // console.log(`checking ${this.product_title} in viewport`,{impression});
+    return impression;
+  }
+  clicked() {
+    this.product_clicked = true;
+    this.product_clicked_date = new Date();
+    this.product_impression = true;
+    if (!this.product_impression_date) this.product_impression_date = new Date();
+    if (this.debug) this.element.style.backgroundColor = &apos;green&apos;;
+    // console.log(&apos;this&apos;,this)
+  }
+  debugInViewport({ elementBottom, viewportTop, elementTop, viewportBottom, impression, }) {
+    if (this.debug) {
+      console.debug(this.product_title,
+        { elementBottom, viewportTop, elementTop, viewportBottom, element:this.element, impression, },
+        &apos;elementBottom &gt; viewportTop&apos;, elementBottom &gt; viewportTop,
+        &apos;elementBottom &lt; viewportBottom&apos;, elementBottom &lt; viewportBottom,
+        &apos;elementTop &lt; viewportBottom&apos;, elementTop &lt; viewportBottom,
+        &apos;elementTop &gt; viewportTop&apos;, elementTop &gt; viewportTop
+      );
+      if (impression) {
+        this.element.style.backgroundColor = &apos;blue&apos;;
+      } else if (!this.product_impression_date) {
+        this.element.style.backgroundColor = &apos;red&apos;;
+      } else if (this.product_impression_date) {
+        this.element.style.backgroundColor = &apos;lightblue&apos;;
+      }
+    }    
+  }
+}
+
+export function checkImpressions(Products) {
+  return function windowScrollResizeCheckImpressionsClosure(/* event */) {
+    Products.forEach((product) =&gt; {
+      product.isInViewport();
+    });
+  };
+}
+
+export function getObjectFromInstance(Instance) {
+  return Object.keys(Instance).reduce((result, prop) =&gt; {
+    result[ prop ] = Instance[ prop ];
+    return result;
+  }, {});
+} 
+
+export function redirect(link) {
+  const debug = window.location.search.includes(debugQueryStringParam);
+  if (debug) console.debug(&apos;REDIRECT&apos;, { link, });
+  else window.location = link;
+}
+
+export function getEventsFromProducts({ Products, link = &apos;&apos;, storeRow, userRow, user_event, }) {
+  return Products.map(product =&gt; {
+    if (product.product_links.includes(link)) product.clicked();
+    const datum = Object.assign({ user_event, user_landing:window.location.href, }, storeRow, userRow,  getObjectFromInstance(product));
+    return datum;
+  });
+}
+
+export function getTrackingFetchOptions({ data, }) {
+  return {
+    method: &apos;POST&apos;,
+    body: JSON.stringify({
+      events: data,
+    }),
+  };
+}
+
+export function captureImpressions({ Products, User, Store, user_event=&apos;beforeunload&apos;, }) {
+  const userRow = getObjectFromInstance(User);
+  const storeRow = getObjectFromInstance(Store);
+  const debug = window.location.search.includes(debugQueryStringParam);
+  return function windowBeforeUnloadImpression(event) {
+    try {
+      if (debug) {
+        // event.preventDefault();
+        console.debug(&apos;ON EVENT&apos;, user_event, event);
+      //   return undefined;
+      }
+      userRow.user_event_type = event.type;
+      const data = getEventsFromProducts({ Products, storeRow, userRow, user_event, });
+      if (data.length) {
+        fetch(trackerPath, getTrackingFetchOptions({ data, }))
+          .then(() =&gt; {
+            // console.log(&apos;GOT BEFORE EXIT INITIAL RESPONSE&apos;);
+          })
+          .catch(e =&gt; {
+            // console.log(&apos;GOT BEFORE EXIT ERROR RESPONSE&apos;);
+            console.error(e);
+          });  
+      }
+      return undefined;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+}
+
+export function sendImpressions({ Products, User, Store, }) {
+  const userRow = getObjectFromInstance(User);
+  const storeRow = getObjectFromInstance(Store);
+  return function windowSendImpressionsClosure(event) {
+    const link = event.target.href;
+    try { 
+      if (event.target.tagName.toUpperCase() === &apos;A&apos; &amp;&amp; link) { 
+        event.preventDefault();
+        userRow.user_event_type = event.type;
+        const data = getEventsFromProducts({ Products, link, storeRow, userRow, user_event: &apos;click&apos;, });
+        if (data.length) {
+          fetch(trackerPath, getTrackingFetchOptions({ data, }))
+            .then(() =&gt; {
+            // console.log(&apos;GOT INITIAL RESPONSE&apos;);
+              redirect(link);
+            })
+            .catch(e =&gt; {
+            // console.log(&apos;GOT ERROR RESPONSE&apos;);
+              console.error(e);
+              redirect(link);
+            });
+        } else {
+          redirect(link);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      redirect(link);
+    }
+  };
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>
