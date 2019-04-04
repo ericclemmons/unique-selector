@@ -1,0 +1,133 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/router.mjs | Event Logger Shopify</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-112697260-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-112697260-2');
+  </script><meta name="description" content="Logging Shopify Click Events"><meta property="og:type" content="website"><meta property="og:url" content="https://jewelml.github.io/event_logger_shopify"><meta property="og:site_name" content="Event Logger Shopify"><meta property="og:title" content="Event Logger Shopify"><meta property="og:image" content="https://jewelml.com/favicon.png"><meta property="og:description" content="Logging Shopify Click Events"><meta property="og:author" content="https://github.com/jewelml"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Event Logger Shopify"><meta property="twitter:description" content="Logging Shopify Click Events"><meta property="twitter:image" content="https://jewelml.com/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/jewelml/event_logger_shopify"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-EventRouter">EventRouter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-patchEmitter">patchEmitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-routerMiddleware">routerMiddleware</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Router">Router</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/router.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import RoutesModule from &apos;routes/index&apos;;
+export const Router = RoutesModule;
+
+/**
+ * Catches all events on event emitter passed to the function
+ * @param {Event Emitter} emitter - websocket/socket.io(client/server)/event emitter to intercept all incoming events
+ * @param {Function} handler - socket.io like middleware (calls handler with packet and next) 
+ */
+export function patchEmitter(emitter, handler) {
+  emitter._onevent = emitter.onevent;
+  const next = () =&gt; { };
+  // Replace the onevent function with a handler that captures all messages
+  emitter.onevent = function (packet) {
+    handler(packet.data, next);
+    // DO NOT USE https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#3-managing-arguments
+    // emitter._onevent.apply(emitter, Array.prototype.slice.call(arguments));
+    const args = new Array(arguments.length);
+    for(var i = 0; i &lt; args.length; ++i) {
+      args[i] = arguments[i];
+    }
+    emitter._onevent.apply(emitter, args);
+  };
+}
+
+/**
+ * Returns socket.io like middleware function to handle incoming events based on their path
+ * @param {Event emitter} options.socket - websocket/socket.io(client/server)/event emitter
+ * @param {object} options.router - routes object 
+ * @see https://www.npmjs.com/package/routes
+ * @return {function} router handler middleware function
+ */
+export function routerMiddleware({ socket, router,  }) {
+  return function routeHandler(packet, next) {
+    // console.log({ packet, socket });
+    const [path, body,] = packet;
+    const match = router.match(path);
+    const req = { path, body, socket, };
+    let cb = (data) =&gt; data;
+    const res = {
+      send(data) {
+        try {
+          socket.emit(path, cb(data));
+          cb = null;
+        } catch (e) {
+          socket.emit(&apos;error&apos;, new Error(&apos;Response already sent&apos;));
+        }
+      },
+    };
+    if (match) {
+      req.params = match.params;
+      req.splats = match.splats;
+      match.fn(req, res, match);
+    }
+    next();
+  };
+}
+
+/**
+ * Responds to events based on their route and a router
+ * @param {Event emitter} options.socket - websocket/socket.io(client/server)/event emitter
+ * @param {object} options.router - routes object 
+ * @see https://www.npmjs.com/package/routes
+ */
+export function EventRouter({ socket, router,  }) {
+  if (socket.use) {
+    socket.use(routerMiddleware({ socket, router,  }));
+  } else {
+    patchEmitter(socket, routerMiddleware({ socket, router,  }));
+  }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+
+
+</body></html>

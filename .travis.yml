@@ -1,10 +1,42 @@
 language: node_js
 node_js:
-  - "node"
-script:
-  - npm install
-  - npm run test
+  - "10"
+  - "8"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+  
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#periodicjs"
+    template:
+      - "Build by %{author} :"
+      - "Git Info: %{branch} - %{commit} with the message %{commit_message}"
+      - "Travis states: %{message}"
+      - "Build Details: %{build_url}"
+      - "Change View: %{compare_url}"
+      - "result = %{result}"
+      - "elapsed time... %{duration}"
+    use_notice: true
+    skip_join: false
+
 install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
+  - npm install  mocha nyc @std/esm -g
+  - npm install 
+  # - npm install --skip_app_post_install=true
+
+branches:
+  only:
+    - master
+    - devel
+git:
+  submodules: false
+
+script:
+  - npm set progress=false && npm run test && npm run coverage
