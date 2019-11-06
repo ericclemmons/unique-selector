@@ -45,7 +45,7 @@
     "babel-register": "^6.3.13",
     "chai": "^3.5.0",
     "component": "~0.10.1",
-    "eslint": "^2.6.0",
+    "eslint": "^4.18.2",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-config-airbnb-lite": "^1.0.4",
     "eslint-plugin-react": "^4.2.3",
