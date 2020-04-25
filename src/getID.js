@@ -9,8 +9,8 @@ export function getID( el )
 
   if( id !== null && id !== '')
   {
-    // if the ID starts with a number selecting with a hash will cause a DOMException
-    return id.match(/^\d/) ? `[id="${id}"]` : '#' + id;
+    // if the ID starts with a number or contains ":" selecting with a hash will cause a DOMException
+    return id.match(/(?:^\d|:)/) ? `[id="${id}"]` : '#' + id;
   }
   return null;
 }
