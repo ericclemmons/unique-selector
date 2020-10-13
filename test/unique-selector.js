@@ -26,6 +26,15 @@ describe( 'Unique Selector Tests', () =>
     expect( uniqueSelector ).to.equal( '[id="1so"]' );
   } );
 
+  it( 'ID', () =>
+  {
+    $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
+    $( 'body' ).append( '<div id="api:key" class="test3"></div>' );
+    const findNode = $( 'body' ).find( '.test3' ).get( 0 );
+    const uniqueSelector = unique( findNode );
+    expect( uniqueSelector ).to.equal( '[id="api:key"]' );
+  } );
+
   it( 'Class', () =>
   {
     $( 'body' ).get( 0 ).innerHTML = ''; //Clear previous appends
