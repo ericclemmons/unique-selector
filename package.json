@@ -50,7 +50,7 @@
     "eslint-config-airbnb-lite": "^1.0.4",
     "eslint-plugin-react": "^4.2.3",
     "jquery": "^2.2.3",
-    "jsdom": "^8.3.0",
+    "jsdom": "^16.5.0",
     "mocha": "~1.7.4",
     "mocha-jsdom": "^1.1.0",
     "mocha-phantomjs": "~1.1.1"
