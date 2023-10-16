@@ -7,6 +7,6 @@
 export function isUnique( el, selector )
 {
   if( !Boolean( selector ) ) return false;
-  const elems = el.ownerDocument.querySelectorAll( selector );
+  const elems = el.getRootNode().querySelectorAll( selector );
   return elems.length === 1 && elems[ 0 ] === el;
 }
